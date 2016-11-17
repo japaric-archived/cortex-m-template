@@ -1,0 +1,15 @@
+[package]
+build = "build.rs"
+name = "board"
+version = "0.1.0"
+
+[dependencies]
+cortex-m = "0.1.4"
+r0 = "0.1.0"
+
+[dependencies.compiler-builtins-snapshot]
+features = ["memcpy"]
+version = "0.0.20161008"
+
+[profile.release]
+lto = true

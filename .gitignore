@@ -1,0 +1,4 @@
+*.svd
+Cargo.lock
+src/peripheral
+target
