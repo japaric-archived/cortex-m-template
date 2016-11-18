@@ -222,7 +222,7 @@ The arguments you have to pass to `openocd` will vary depending on your device
 
 ```
 # Terminal 2
-$ arm-none-eabi-gdb -q target/$TARGET/debug/app
+$ arm-none-eabi-gdb -q target/$TARGET/debug/examples/app
 Breakpoint 1, app::main ()
     at $PWD/examples/app.rs:7
 7       pub fn main() -> ! {
@@ -506,11 +506,11 @@ But other than that, building your new binary Cargo project is no different from
 building an example in this Cargo project template:
 
 ```
-$ xargo build --target thumbv7em-none-eabihf
+$ xargo build --target $TARGET
 
-$ arm-none-eabi-objdump -Cd target/thumbv7em-none-eabihf/debug/app
+$ arm-none-eabi-objdump -Cd target/$TARGET/debug/app
 
-target/thumbv7em-none-eabihf/debug/app:     file format elf32-littlearm
+target/$TARGET/debug/app:     file format elf32-littlearm
 
 
 Disassembly of section .text:
