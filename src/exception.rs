@@ -1,37 +1,33 @@
 //! Exceptions
-//!
-//!
-//!
-//!
-//!
 
 use cortex_m::{Handler, StackFrame};
 
 // This default exception handler gives you access to the previous stack frame
 // which is where the exception occurred. To be able to do that, the handler is
-// split in two parts: `default_handler_entry_point` and `default_handler`.
+// split in two parts: `_default_exception_handler` and `deh`.
 //
-// NOTE Do NOT modify this function.
+// NOTE Do NOT modify this function. You are free to modify the `deh` function
+// below though.
 #[doc(hidden)]
-#[export_name = "_default_exception_handler"]
 #[naked]
-pub unsafe extern "C" fn default_handler_entry_point() {
+#[no_mangle]
+pub unsafe extern "C" fn _default_exception_handler() {
     use core::intrinsics;
 
     // NOTE need asm!, #[naked] and unreachable() to avoid modifying the stack
     // pointer (MSP) so it points to the previous stack frame
     asm!("mrs r0, MSP
           ldr r1, [r0, #20]
-          b _default_exception_handler_impl" :::: "volatile");
+          b $0" :: "i"(deh as extern "C" fn(&StackFrame) -> !) :: "volatile");
 
     intrinsics::unreachable();
 }
 
 // Default exception handler that has access to previous stack frame `_sf`
-#[doc(hidden)]
-#[export_name = "_default_exception_handler_impl"]
-pub unsafe extern "C" fn default_handler(_sf: &StackFrame) -> ! {
-    bkpt!();
+extern "C" fn deh(_sf: &StackFrame) -> ! {
+    unsafe {
+        bkpt!();
+    }
 
     loop {}
 }
