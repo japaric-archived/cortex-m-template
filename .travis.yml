@@ -19,23 +19,30 @@ matrix:
     - env: TARGET=thumbv7em-none-eabihf
 
 install:
-  - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $TRAVIS_RUST_VERSION
-  - source ~/.cargo/env
-  - rustup component add rust-src
+  # NOTE(TRAVIS_BRANCH) Travis is configured to only build *pushes* (not PRs).
+  - if [ $TRAVIS_BRANCH != master ] || [ $TRAVIS_EVENT_TYPE = cron ]; then
+      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $TRAVIS_RUST_VERSION;
+      source ~/.cargo/env;
+      rustup component add rust-src;
+    fi
 
 script:
-  - cargo generate-lockfile
-  - if [[ $TRAVIS_OS_NAME = linux ]]; then
-      sh ci/run-docker.sh $TARGET || exit 1;
-    else
-      sh ci/run.sh || exit 1;
-    fi;
-  # Travis can't cache files that are not readable by "others"
-  - chmod -R a+r $HOME/.cargo
+  # NOTE(TRAVIS_BRANCH) See the NOTE in the `install` section
+  # chmod: Travis can't cache files that are not readable by "others"
+  - if [ $TRAVIS_BRANCH != master ] || [ $TRAVIS_EVENT_TYPE = cron ]; then
+      cargo generate-lockfile;
+      if [[ $TRAVIS_OS_NAME = linux ]]; then
+        sh ci/run-docker.sh $TARGET || exit 1;
+      else
+        sh ci/run.sh || exit 1;
+      fi;
+      chmod -R a+r $HOME/.cargo;
+    fi
 
 branches:
   only:
     - auto
+    - master
     - try
 
 notifications:
