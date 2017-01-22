@@ -27,6 +27,7 @@ written/organized the way it is, you can read the [Copper] book.
   * [Auto-generate an API to access the peripherals](#auto-generate-an-api-to-access-the-peripherals)
   * [Use this Cargo project as a library](#use-this-cargo-project-as-a-library)
   * ["Install" interrupts](#install-interrupts)
+  * [Semihosting](#semihosting)
 * [License](#license)
   * [Contribution](#contribution)
 
@@ -44,6 +45,8 @@ written/organized the way it is, you can read the [Copper] book.
 
 - All programs come with a catch-all exception handler (but which can be
   overridden) that gives you information about what triggered the exception.
+
+- Logging / printing to the host stdout via semihosting
 
 # Usage
 
@@ -606,6 +609,15 @@ pub extern "C" fn basic_timer_isr() {
     // Interrupt Service Routine
 }
 ```
+
+## Semihosting
+
+If you enable the "semihosting" Cargo feature you'll be able to use semihosting
+to write microcontroller programs that can send formatted messages to the host's
+stdout, among other things, when a debugger is attached. This semihosting
+feature is documented in the [`cortex-m-semihosting` crate][sh].
+
+[sh]: https://docs.rs/cortex-m-semihosting/0.1.0/cortex_m_semihosting/
 
 # License
 

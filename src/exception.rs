@@ -1,5 +1,7 @@
 //! Exceptions
 
+#[cfg(feature = "semihosting")]
+use cortex_m::Exception;
 use cortex_m::{Handler, StackFrame};
 
 // This default exception handler gives you access to the previous stack frame
@@ -25,6 +27,16 @@ pub unsafe extern "C" fn _default_exception_handler() {
 
 // Default exception handler that has access to previous stack frame `_sf`
 extern "C" fn deh(_sf: &StackFrame) -> ! {
+    match () {
+        #[cfg(feature = "semihosting")]
+        () => {
+            hprintln!("EXCEPTION {:?} @ PC=0x{:08x}",
+                      Exception::current(), _sf.pc);
+        }
+        #[cfg(not(feature = "semihosting"))]
+        () => {}
+    }
+
     unsafe {
         bkpt!();
     }

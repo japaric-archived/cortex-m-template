@@ -8,6 +8,10 @@
 #![feature(naked_functions)]
 #![no_std]
 
+#[cfg(feature = "semihosting")]
+#[macro_reexport(hprint, hprintln)]
+#[macro_use]
+extern crate cortex_m_semihosting;
 extern crate compiler_builtins;
 #[macro_reexport(bkpt)]
 #[macro_use]

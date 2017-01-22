@@ -4,12 +4,19 @@ name = "board"
 version = "0.1.0"
 
 [dependencies]
-cortex-m = "0.1.4"
+cortex-m = "0.1.6"
 r0 = "0.1.0"
+
+[dependencies.cortex-m-semihosting]
+optional = true
+version = "0.1.0"
 
 [dependencies.compiler_builtins]
 features = ["mem"]
 git = "https://github.com/rust-lang-nursery/compiler-builtins"
+
+[features]
+semihosting = ["cortex-m-semihosting"]
 
 [profile.release]
 lto = true
