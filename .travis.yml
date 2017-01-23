@@ -1,43 +1,31 @@
-cache: cargo
 dist: trusty
 language: rust
-# NOTE This is default but can be override on a target by target basis in the "matrix" below
-rust: nightly
 services: docker
 sudo: required
 
-env:
-  global:
-    - TARGET=thumbv7m-none-eabi
+rust: nightly
 
 matrix:
   include:
-    # FIXME(rust-lang/rust#38406) uncomment this when rust-lang/rust#38411
-    # reaches nightly
-    # - env: TARGET=thumbv6m-none-eabi
+    - env: TARGET=thumbv7m-none-eabi
     - env: TARGET=thumbv7em-none-eabi
     - env: TARGET=thumbv7em-none-eabihf
+env: TARGET=thumbv6m-none-eabi
+
+before_install: set -e
 
 install:
-  # NOTE(TRAVIS_BRANCH) Travis is configured to only build *pushes* (not PRs).
-  - if [ $TRAVIS_BRANCH != master ] || [ $TRAVIS_EVENT_TYPE = cron ]; then
-      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $TRAVIS_RUST_VERSION;
-      source ~/.cargo/env;
-      rustup component add rust-src;
-    fi
+  - sh ci/install.sh
+  - source ~/.cargo/env || true
 
 script:
-  # NOTE(TRAVIS_BRANCH) See the NOTE in the `install` section
-  # chmod: Travis can't cache files that are not readable by "others"
-  - if [ $TRAVIS_BRANCH != master ] || [ $TRAVIS_EVENT_TYPE = cron ]; then
-      cargo generate-lockfile;
-      if [[ $TRAVIS_OS_NAME = linux ]]; then
-        sh ci/run-docker.sh $TARGET || exit 1;
-      else
-        sh ci/run.sh || exit 1;
-      fi;
-      chmod -R a+r $HOME/.cargo;
-    fi
+  - bash ci/script.sh
+
+after_script: set +e
+
+cache: cargo
+before_cache:
+  - chmod -R a+r $HOME/.cargo
 
 branches:
   only:

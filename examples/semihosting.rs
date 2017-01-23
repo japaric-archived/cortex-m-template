@@ -1,6 +1,7 @@
 #![no_main]
 #![no_std]
 
+#[cfg_attr(feature = "semihosting", macro_use)]
 extern crate board;
 
 #[no_mangle]

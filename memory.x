@@ -1,7 +1,7 @@
 MEMORY
 {
   /* TODO You must correct these values */
-  FLASH : ORIGIN = 0x0BAAAD00, LENGTH = 2K
+  FLASH : ORIGIN = 0x0BAAAD00, LENGTH = 21K
   RAM : ORIGIN = 0x2BAAAD00, LENGTH = 0
 }
 
