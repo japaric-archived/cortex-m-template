@@ -27,15 +27,7 @@ pub unsafe extern "C" fn _default_exception_handler() {
 
 // Default exception handler that has access to previous stack frame `_sf`
 extern "C" fn deh(_sf: &StackFrame) -> ! {
-    match () {
-        #[cfg(feature = "semihosting")]
-        () => {
-            hprintln!("EXCEPTION {:?} @ PC=0x{:08x}",
-                      Exception::current(), _sf.pc);
-        }
-        #[cfg(not(feature = "semihosting"))]
-        () => {}
-    }
+    hprintln!("EXCEPTION {:?} @ PC=0x{:08x}", Exception::current(), _sf.pc);
 
     unsafe {
         bkpt!();

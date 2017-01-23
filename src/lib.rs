@@ -18,6 +18,8 @@ extern crate compiler_builtins;
 extern crate cortex_m;
 extern crate r0;
 
+#[macro_use]
+mod macros;
 mod lang_items;
 
 pub mod exception;
