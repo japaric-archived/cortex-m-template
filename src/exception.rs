@@ -41,20 +41,17 @@ extern "C" fn deh(_sf: &StackFrame) -> ! {
 #[export_name = "_reset"]
 pub unsafe extern "C" fn reset() -> ! {
     extern "C" {
-        static _ebss: u32;
-        static _edata: u32;
-        static _sidata: u32;
+        static mut _ebss: u32;
         static mut _sbss: u32;
+
+        static mut _edata: u32;
         static mut _sdata: u32;
+
+        static _sidata: u32;
     }
 
-    if &_sbss as *const _ as usize != &_ebss as *const _ as usize {
-        ::r0::zero_bss(&mut _sbss, &_ebss);
-    }
-
-    if &_sdata as *const _ as usize != &_edata as *const _ as usize {
-        ::r0::init_data(&mut _sdata, &_edata, &_sidata);
-    }
+    ::r0::zero_bss(&mut _sbss, &mut _ebss);
+    ::r0::init_data(&mut _sdata, &mut _edata, &_sidata);
 
     ::init();
 

@@ -5,7 +5,7 @@ version = "0.1.0"
 
 [dependencies]
 cortex-m = "0.1.6"
-r0 = "0.1.0"
+r0 = "0.2.0"
 
 [dependencies.cortex-m-semihosting]
 optional = true
