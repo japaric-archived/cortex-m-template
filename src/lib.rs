@@ -1,9 +1,14 @@
-//! A crate to hack the $DEVELOPMENT_BOARD!
+//! Based on `cortex-m-template`
+//!
+//! https://github.com/japaric/cortex-m-template
 
+#![deny(missing_docs)]
+#![deny(warnings)]
 #![feature(asm)]
 #![feature(compiler_builtins_lib)]
 #![feature(core_intrinsics)]
 #![feature(lang_items)]
+#![feature(linkage)]
 #![feature(macro_reexport)]
 #![feature(naked_functions)]
 #![no_std]
@@ -20,10 +25,8 @@ extern crate r0;
 
 #[macro_use]
 mod macros;
+
 mod lang_items;
 
-pub mod exception;
-pub mod interrupt;
-
-// "Pre `main`" initialization routine
-fn init() {}
+pub mod exceptions;
+pub mod interrupts;

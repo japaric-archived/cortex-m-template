@@ -1,11 +1,9 @@
 MEMORY
 {
   /* TODO You must correct these values */
-  FLASH : ORIGIN = 0x0BAAAD00, LENGTH = 21K
-  RAM : ORIGIN = 0x2BAAAD00, LENGTH = 0
+  FLASH : ORIGIN = 0xBAAAAAAD, LENGTH = 0
+  RAM : ORIGIN = 0xBAAAAAAD, LENGTH = 0
 }
-
-ENTRY(_reset)
 
 SECTIONS
 {
@@ -14,15 +12,17 @@ SECTIONS
     /* Vector table */
     _VECTOR_TABLE = .;
     LONG(ORIGIN(RAM) + LENGTH(RAM));
-    LONG(_reset + 1);
-    KEEP(*(.rodata._EXCEPTIONS));
-    _eexceptions = .;
-    KEEP(*(.rodata._INTERRUPTS));
-    _einterrupts = .;
+    LONG(__reset + 1);
 
-    /* Entry point: reset handler */
-    _reset = .;
-    *(.text._reset);
+    KEEP(*(.rodata._EXCEPTIONS));
+    __exceptions = .;
+
+    KEEP(*(.rodata._INTERRUPTS));
+    __interrupts = .;
+
+    /* Entry point: the reset handler */
+    __reset = .;
+    *(.text.start);
 
     *(.text.*);
     *(.rodata.*);
@@ -46,24 +46,13 @@ SECTIONS
 
   /DISCARD/ :
   {
+    /* Unused unwinding stuff */
     *(.ARM.exidx.*)
-    *(.note.gnu.build-id.*)
   }
 }
 
-/* Exceptions */
-PROVIDE(_nmi = _default_exception_handler);
-PROVIDE(_hard_fault = _default_exception_handler);
-PROVIDE(_memmanage_fault = _default_exception_handler);
-PROVIDE(_bus_fault = _default_exception_handler);
-PROVIDE(_usage_fault = _default_exception_handler);
-PROVIDE(_svcall = _default_exception_handler);
-PROVIDE(_pendsv = _default_exception_handler);
-PROVIDE(_systick = _default_exception_handler);
+ASSERT(__exceptions - ORIGIN(FLASH) == 0x40,
+       "you must define the _EXCEPTIONS symbol");
 
-/* TODO Interrupts (if you need them) */
-/* PROVIDE(_wwdg = _default_exception_handler); */
-/* PROVIDE(_pvd = _default_exception_handler); */
-/* ... */
-
-ASSERT(_eexceptions - ORIGIN(FLASH) == 0x40, "exceptions not linked where expected");
+ASSERT(__interrupts - __exceptions > 0,
+       "you must define the _INTERRUPTS symbol");
