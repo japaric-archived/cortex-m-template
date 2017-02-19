@@ -22,6 +22,8 @@
   * [Use this Cargo project as a library](#use-this-cargo-project-as-a-library)
   * [Use interrupts](#use-interrupts)
   * [Semihosting](#semihosting)
+* [Tips](#tips)
+  - [`build.target`]#(buildtarget)
 * [License](#license)
   * [Contribution](#contribution)
 
@@ -564,6 +566,28 @@ stdout, among other things. This semihosting feature is documented in
 the [`cortex-m-semihosting` crate][sh].
 
 [sh]: https://docs.rs/cortex-m-semihosting/0.1.0/cortex_m_semihosting/
+
+# Tips
+
+## `build.target`
+
+You can set `build.target` in the `.cargo/config` to avoid having to pass
+`--target $TARGET` every time you invoke Cargo.
+
+``` diff
++[build]
++target = "thumbv7m-none-eabi"
++
+ [target.thumbv6m-none-eabi]
+ rustflags = [
+   "-C", "link-arg=-Tmemory.x",
+```
+
+Then you can just call `xargo build --example app` to build an example.
+
+**HEADS UP** This change will make `cargo install` unusable from within this
+Cargo project. If you need to `cargo install` something, move to some parent
+directory.
 
 # License
 
