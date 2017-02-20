@@ -13,6 +13,8 @@
 #![feature(naked_functions)]
 #![no_std]
 
+#[cfg(feature = "alloc")]
+extern crate alloc_cortex_m;
 #[cfg(feature = "semihosting")]
 #[macro_reexport(hprint, hprintln)]
 #[macro_use]
@@ -22,6 +24,7 @@ extern crate compiler_builtins;
 #[macro_use]
 extern crate cortex_m;
 #[macro_reexport(pre_init_array, init_array)]
+#[cfg_attr(feature = "alloc", macro_use)]
 extern crate r0;
 
 #[macro_use]
@@ -31,3 +34,13 @@ mod lang_items;
 
 pub mod exceptions;
 pub mod interrupts;
+
+#[cfg(feature = "alloc")]
+init_array!(alloc, {
+    extern "C" {
+        static mut _edata: usize;
+    }
+
+    // 1KiB heap
+    alloc_cortex_m::init(&mut _edata, (&mut _edata as *mut _).offset(256));
+});
