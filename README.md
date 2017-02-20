@@ -1,7 +1,6 @@
 # `cortex-m-template`
 
-> A Cargo project template to develop bare metal programs for Cortex-M
-> microcontrollers.
+> A Cargo project template for ARM Cortex-M bare metal development
 
 # Table of contents
 
@@ -23,7 +22,7 @@
   * [Use interrupts](#use-interrupts)
   * [Semihosting](#semihosting)
 * [Tips](#tips)
-  - [`build.target`]#(buildtarget)
+  - [`build.target`](#buildtarget)
 * [License](#license)
   * [Contribution](#contribution)
 
