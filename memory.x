@@ -48,6 +48,7 @@ SECTIONS
   {
     /* Unused unwinding stuff */
     *(.ARM.exidx.*)
+    *(.ARM.extab.*)
   }
 }
 
