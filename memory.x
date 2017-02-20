@@ -25,7 +25,14 @@ SECTIONS
     *(.text.start);
 
     *(.text.*);
+
     *(.rodata.*);
+    __pre_init_array_start = ALIGN(4);
+    KEEP(*(.pre_init_array));
+    __pre_init_array_end = ALIGN(4);
+    __init_array_start = ALIGN(4);
+    KEEP(*(.init_array));
+    __init_array_end = ALIGN(4);
   } > FLASH
 
   .bss : ALIGN(4)

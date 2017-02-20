@@ -21,6 +21,7 @@ extern crate compiler_builtins;
 #[macro_reexport(bkpt)]
 #[macro_use]
 extern crate cortex_m;
+#[macro_reexport(pre_init_array, init_array)]
 extern crate r0;
 
 #[macro_use]

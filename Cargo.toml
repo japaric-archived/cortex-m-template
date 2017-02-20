@@ -6,7 +6,8 @@ version = "0.1.0"
 
 [dependencies]
 cortex-m = "0.1.6"
-r0 = "0.2.0"
+# r0 = "0.2.0"
+r0 = { git = "https://github.com/japaric/r0", branch = "init" }
 
 [dependencies.cortex-m-semihosting]
 optional = true
