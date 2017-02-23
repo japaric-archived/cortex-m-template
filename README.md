@@ -412,7 +412,7 @@ chances are that you'll find it in [this repository]. Then check svd2rust's
 [documentation] to learn how to use the tool.
 
 [this repository]: https://github.com/posborne/cmsis-svd/tree/master/data
-[documentation]: https://github.com/docs.rs/svd2rust
+[documentation]: https://docs.rs/svd2rust
 
 ## Use this Cargo project as a library
 
