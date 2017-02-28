@@ -5,16 +5,16 @@ unsafe extern "C" fn panic_fmt(_args: ::core::fmt::Arguments,
                                _file: &'static str,
                                _line: u32)
                                -> ! {
-    hprint!("panicked at '");
     match () {
         #[cfg(feature = "semihosting")]
         () => {
-            ::cortex_m_semihosting::io::write_fmt(_args);
+            hprint!("panicked at '");
+            ::cortex_m::semihosting::io::write_fmt(_args);
+            hprintln!("', {}:{}", _file, _line);
         }
         #[cfg(not(feature = "semihosting"))]
         () => {}
     }
-    hprintln!("', {}:{}", _file, _line);
 
     bkpt!();
 

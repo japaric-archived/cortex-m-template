@@ -8,8 +8,7 @@ extern crate {{name}};
 
 use core::ptr;
 
-use {{name}}::exceptions::{self, Exceptions};
-use {{name}}::interrupts::{self, Interrupts};
+use {{name}}::{exception, interrupt};
 
 fn main() {
     // Read an invalid memory address. This triggers a "hard fault" exception
@@ -19,11 +18,11 @@ fn main() {
 }
 
 #[no_mangle]
-pub static _EXCEPTIONS: Exceptions = Exceptions {
+pub static _EXCEPTIONS: exception::Handlers = exception::Handlers {
     // Here we override the default handler with a `custom_handler` but only
     // for hard fault exceptions.
     hard_fault: custom_handler,
-    ..exceptions::DEFAULT_HANDLERS
+    ..exception::DEFAULT_HANDLERS
 };
 
 unsafe extern "C" fn custom_handler() {
@@ -32,5 +31,5 @@ unsafe extern "C" fn custom_handler() {
 }
 
 #[no_mangle]
-pub static _INTERRUPTS: Interrupts =
-    Interrupts { ..interrupts::DEFAULT_HANDLERS };
+pub static _INTERRUPTS: interrupt::Handlers =
+    interrupt::Handlers { ..interrupt::DEFAULT_HANDLERS };

@@ -13,8 +13,7 @@ extern crate {{name}};
 // `std`'s functionality that works on bare metal environments
 use core::u32;
 
-use {{name}}::exceptions::{self, Exceptions};
-use {{name}}::interrupts::{self, Interrupts};
+use {{name}}::{exception, interrupt};
 
 // We need a `main` function, just like every other Rust program
 fn main() {
@@ -26,10 +25,10 @@ fn main() {
 // The program must specify how exceptions will be handled
 // Here we just use the default handler to handle all the exceptions
 #[no_mangle]
-pub static _EXCEPTIONS: Exceptions =
-    Exceptions { ..exceptions::DEFAULT_HANDLERS };
+pub static _EXCEPTIONS: exception::Handlers =
+    exception::Handlers { ..exception::DEFAULT_HANDLERS };
 
 // Likewise with interrupts
 #[no_mangle]
-pub static _INTERRUPTS: Interrupts =
-    Interrupts { ..interrupts::DEFAULT_HANDLERS };
+pub static _INTERRUPTS: interrupt::Handlers =
+    interrupt::Handlers { ..interrupt::DEFAULT_HANDLERS };

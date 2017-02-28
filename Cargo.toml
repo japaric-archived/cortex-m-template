@@ -5,19 +5,18 @@ name = "{{name}}"
 version = "0.1.0"
 
 [dependencies]
-cortex-m = "0.1.6"
 r0 = "0.2.0"
 
-[dependencies.cortex-m-semihosting]
-optional = true
-version = "0.1.2"
+[dependencies.cortex-m]
+branch = "svd2rust"
+git = "https://github.com/japaric/cortex-m"
 
 [dependencies.compiler_builtins]
 features = ["mem"]
 git = "https://github.com/rust-lang-nursery/compiler-builtins"
 
 [features]
-semihosting = ["cortex-m-semihosting"]
+semihosting = ["cortex-m/semihosting"]
 
 [profile.release]
 lto = true
