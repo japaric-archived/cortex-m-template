@@ -16,7 +16,7 @@ unsafe extern "C" fn panic_fmt(_args: ::core::fmt::Arguments,
         () => {}
     }
 
-    bkpt!();
+    ::cortex_m::asm::bkpt();
 
     loop {}
 }

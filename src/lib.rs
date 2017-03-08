@@ -15,8 +15,6 @@
 extern crate compiler_builtins;
 #[cfg_attr(feature = "semihosting",
            macro_reexport(ehprint, ehprintln, hprint, hprintln))]
-#[macro_reexport(bkpt)]
-#[macro_use]
 extern crate cortex_m;
 extern crate r0;
 
