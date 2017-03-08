@@ -1,12 +1,10 @@
 //! How to override the panic handler
 
-#![feature(asm)]  // for `bkpt!`
 #![no_std]
 
-#[macro_use]  // for `bkpt!`
 extern crate {{name}};
 
-use {{name}}::{exception, interrupt};
+use {{name}}::{asm, exception, interrupt};
 
 fn main() {
     panic!()
@@ -20,7 +18,7 @@ pub unsafe extern "C" fn rust_begin_unwind(_args: ::core::fmt::Arguments,
                                            _line: u32)
                                            -> ! {
     // After executing the `panic!` in `main`, you'll reach this breakpoint
-    bkpt!();
+    asm::bkpt();
 
     loop {}
 }

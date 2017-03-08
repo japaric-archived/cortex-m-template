@@ -15,6 +15,7 @@
 extern crate compiler_builtins;
 #[cfg_attr(feature = "semihosting",
            macro_reexport(ehprint, ehprintln, hprint, hprintln))]
+#[cfg_attr(feature = "semihosting", macro_use)]
 extern crate cortex_m;
 extern crate r0;
 
@@ -22,3 +23,5 @@ mod lang_items;
 
 pub mod exception;
 pub mod interrupt;
+
+pub use cortex_m::asm;

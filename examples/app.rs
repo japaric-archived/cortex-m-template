@@ -17,9 +17,9 @@ use {{name}}::{exception, interrupt};
 
 // We need a `main` function, just like every other Rust program
 fn main() {
-    let y: u32;
-    let x: u32 = 0xDEADBEEF;
-    y = u32::MAX;
+    let _y: u32;
+    let _x: u32 = 0xDEADBEEF;
+    _y = u32::MAX;
 }
 
 // The program must specify how exceptions will be handled

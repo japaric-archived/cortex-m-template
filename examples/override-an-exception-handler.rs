@@ -1,14 +1,12 @@
 //! How to override an exception handler
 
-#![feature(asm)]  // for `bkpt!`
 #![no_std]
 
-#[macro_use]  // for `bkpt!`
 extern crate {{name}};
 
 use core::ptr;
 
-use {{name}}::{exception, interrupt};
+use {{name}}::{asm, exception, interrupt};
 
 fn main() {
     // Read an invalid memory address. This triggers a "hard fault" exception
@@ -27,7 +25,7 @@ pub static _EXCEPTIONS: exception::Handlers = exception::Handlers {
 
 unsafe extern "C" fn custom_handler<T>(_: &T) {
     // Once you hit the exception in `main`, you should reach this point!
-    bkpt!();
+    asm::bkpt();
 }
 
 #[no_mangle]
