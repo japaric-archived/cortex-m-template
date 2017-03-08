@@ -8,7 +8,7 @@ version = "0.1.0"
 r0 = "0.2.0"
 
 [dependencies.cortex-m]
-branch = "svd2rust"
+branch = "ng"
 git = "https://github.com/japaric/cortex-m"
 
 [dependencies.compiler_builtins]

@@ -1,19 +1,16 @@
 //! Interrupts
 
-use cortex_m::{exception, Handler};
+// TODO auto-generate this file using `svd2rust`
+
+use cortex_m::Reserved;
 
 /// Interrupt handlers
-#[repr(C)]
 pub struct Handlers {
-    // TODO update this struct to list the interrupts specific to your device
-    // Make sure they are specified in the right order!
-    // Use `exceptions::Exceptions` as a reference
-    /// Unspecified interrupts
-    pub unspecified: [Handler; 240],
+    /// Reserved spot in the vector table
+    pub reserved: [Reserved; 240],
 }
 
 /// Default interrupt handlers
 pub const DEFAULT_HANDLERS: Handlers = Handlers {
-    // TODO you'll have to update this as well
-    unspecified: [exception::default_handler; 240],
+    reserved: [Reserved::Vector; 240],
 };

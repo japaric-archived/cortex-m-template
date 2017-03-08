@@ -25,7 +25,7 @@ pub static _EXCEPTIONS: exception::Handlers = exception::Handlers {
     ..exception::DEFAULT_HANDLERS
 };
 
-unsafe extern "C" fn custom_handler() {
+unsafe extern "C" fn custom_handler<T>(_: &T) {
     // Once you hit the exception in `main`, you should reach this point!
     bkpt!();
 }
