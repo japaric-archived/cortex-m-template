@@ -21,6 +21,7 @@ SECTIONS
     __interrupts = .;
 
     /* Entry point: the reset handler */
+    KEEP(*(.text.start));
     __reset = .;
     *(.text.start);
 
