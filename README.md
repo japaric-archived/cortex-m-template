@@ -48,8 +48,13 @@
 
 ## Step 1: Create a new Cargo project based on this template
 
+> **NOTE** The Cargo template has been removed as it didn't go through the RFC
+> process. It may come back in the future and may turn into a custom subcommand.
+> In the meantime, you can temporarily switch to an older Cargo version to use
+> the template feature.
+
 ```
-$ cargo new myproject --template https://github.com/japaric/cortex-m-template
+$ cargo +nightly-2017-04-01 new myproject --template https://github.com/japaric/cortex-m-template
 
 $ cd myproject
 ```
