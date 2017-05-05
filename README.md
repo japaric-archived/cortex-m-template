@@ -1,3 +1,18 @@
+# Status
+
+This crate has been **SUPERSEDED** by
+the [`cortex-m-quickstart`](https://github.com/japaric/cortex-m-quickstart)
+template, which has better code reuse as the startup code has been moved into
+the [`cortex-m-rt`](https://github.com/japaric/cortex-m-rt) crate. Check this
+[blog post][quickstart] for an introduction to the `cortex-m-quickstart`
+template.
+
+[quickstart]: http://blog.japaric.io/quickstart/
+
+-- @japaric, 2017-05-05
+
+---
+
 # `cortex-m-template`
 
 > A Cargo project template for ARM Cortex-M bare metal development
